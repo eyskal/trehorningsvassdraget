@@ -52,8 +52,15 @@ const stops=L.geoJSON(points,{
 }).addTo(map);
 
 const bounds=stops.getBounds();
-if(bounds.isValid()) map.fitBounds(bounds.pad(0.10),{padding:[10,10]});
-else map.setView([60.01,10.44],14);
+function setInitialView(){
+  if(!bounds.isValid()) return map.setView([60.01,10.44],14);
+  const mobile = window.matchMedia('(max-width: 700px)').matches;
+  map.fitBounds(bounds.pad(mobile ? 0.24 : 0.12), {
+    padding: mobile ? [24,24] : [18,18],
+    maxZoom: mobile ? 14 : 15
+  });
+}
+setInitialView();
 
 function resizeMap(){ setTimeout(()=>map.invalidateSize(false),0); }
 window.addEventListener('resize',resizeMap);
