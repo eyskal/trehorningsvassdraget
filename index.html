@@ -20,9 +20,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 #layerPanel.open{display:block}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.panel-head strong{font-size:14px;letter-spacing:.03em}.xbtn{border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;padding:4px 7px;border-radius:5px}
 .row{display:flex;align-items:center;gap:9px;min-height:34px;font-size:14px}.row input[type=checkbox]{width:18px;height:18px}.section{border-top:1px solid rgba(0,0,0,.12);margin-top:9px;padding-top:10px}.range-head{display:flex;justify-content:space-between;font-size:13px;margin:5px 0}.range{width:100%;accent-color:#555}
 #nearInfo{font-size:12px;line-height:1.35;color:#444;margin-top:7px;min-height:16px}
-#timeBox{position:absolute;z-index:1050;left:12px;bottom:32px;width:350px;max-width:calc(100% - 84px);box-sizing:border-box;padding:13px 38px 13px 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:9px;box-shadow:var(--shadow);color:#222;font-size:13px;line-height:1.4}
+#timeBox{position:absolute;display:none;z-index:1050;left:12px;bottom:32px;width:350px;max-width:calc(100% - 84px);box-sizing:border-box;padding:13px 38px 13px 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:9px;box-shadow:var(--shadow);color:#222;font-size:13px;line-height:1.4}
 #timeBox h2{font-size:15px;margin:0 0 5px}#timeBox p{margin:0}#timeClose{position:absolute;right:5px;top:5px}
-#timeReopen{position:absolute;z-index:1000;left:12px;bottom:32px;display:none}
+#timeReopen{position:absolute;z-index:1000;left:12px;bottom:32px;display:block}
 .user-dot{width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.55)}
 @media(max-width:700px){#layerButton{top:8px;right:8px}#layerPanel{top:57px;right:8px;width:260px;padding:13px}#locateButton{right:8px;bottom:32px}#timeBox{left:8px;bottom:27px;max-width:calc(100% - 68px);width:330px;font-size:12.5px;padding:11px 34px 11px 12px}#timeBox h2{font-size:14px}#timeReopen{left:8px;bottom:27px}.map-btn{min-height:44px}.stop-marker{width:30px;height:30px;line-height:30px}}
 </style>
@@ -40,17 +40,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
   </div>
   <div class="section">
     <label class="row"><input id="locationToggle" type="checkbox"> Min posisjon</label>
-    <label class="row"><input id="nearestToggle" type="checkbox"> Linje til nærmeste stopp</label>
+    <label class="row"><input id="nearestToggle" type="checkbox"> Linje til nærmeste fotopunkt</label>
     <div id="nearInfo">Posisjon er ikke aktivert.</div>
   </div>
 </div>
 <button id="locateButton" class="map-btn" type="button" title="Vis min posisjon" aria-label="Vis min posisjon">◎</button>
 <div id="timeBox">
   <button id="timeClose" class="xbtn" type="button" aria-label="Lukk informasjon">×</button>
-  <h2>Geografisk referanse</h2>
-  <p>Kartet og terrengrelieffet viser Kartverkets tilgjengelige grunnlag. Dokumentasjonen av selve vassdraget er gjort før ombyggingen.</p>
+  <h2>Om kartet</h2>
+  <p>Kartet viser vassdraget og fotopunktene i dokumentasjonen. Kart- og terrengdata leveres av Kartverket og kan oppdateres over tid.</p>
 </div>
-<button id="timeReopen" class="map-btn" type="button">ⓘ Tidskapsel</button>
+<button id="timeReopen" class="map-btn" type="button" aria-label="Om kartet">ⓘ Om kartet</button>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const points={"type":"FeatureCollection","features":[
@@ -87,7 +87,7 @@ let watchId=null,userMarker=null,accuracyCircle=null,nearestLine=null,lastPositi
 const userIcon=L.divIcon({className:'',html:'<div class="user-dot"></div>',iconSize:[20,20],iconAnchor:[10,10]});
 function distanceM(a,b){const R=6371000,rad=x=>x*Math.PI/180,dLat=rad(b.lat-a.lat),dLon=rad(b.lng-a.lng),la1=rad(a.lat),la2=rad(b.lat);const h=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
 function nearestStop(ll){let best=null;points.features.forEach(f=>{const [lng,lat]=f.geometry.coordinates,d=distanceM(ll,{lat,lng});if(!best||d<best.d)best={d,f,ll:L.latLng(lat,lng)}});return best}
-function updateNearest(){if(nearestLine){map.removeLayer(nearestLine);nearestLine=null}if(!lastPosition){$('nearInfo').textContent='Posisjon er ikke aktivert.';return}const n=nearestStop(lastPosition);$('nearInfo').textContent=`Nærmeste stopp: ${n.f.properties.chapter} · ${Math.round(n.d)} m`;if($('nearestToggle').checked)nearestLine=L.polyline([lastPosition,n.ll],{weight:2,dashArray:'6 6',opacity:.8}).addTo(map)}
+function updateNearest(){if(nearestLine){map.removeLayer(nearestLine);nearestLine=null}if(!lastPosition){$('nearInfo').textContent='Posisjon er ikke aktivert.';return}const n=nearestStop(lastPosition);$('nearInfo').textContent=`Nærmeste fotopunkt: ${n.f.properties.chapter} · ${Math.round(n.d)} m`;if($('nearestToggle').checked)nearestLine=L.polyline([lastPosition,n.ll],{weight:2,dashArray:'6 6',opacity:.8}).addTo(map)}
 function onPosition(pos){const ll=L.latLng(pos.coords.latitude,pos.coords.longitude);lastPosition=ll;if(!userMarker)userMarker=L.marker(ll,{icon:userIcon,zIndexOffset:1000}).addTo(map);else userMarker.setLatLng(ll);if(!accuracyCircle)accuracyCircle=L.circle(ll,{radius:pos.coords.accuracy||0,weight:1,opacity:.45,fillOpacity:.08}).addTo(map);else accuracyCircle.setLatLng(ll).setRadius(pos.coords.accuracy||0);updateNearest()}
 function onPositionError(err){$('nearInfo').textContent='Posisjon kunne ikke hentes: '+err.message;$('locationToggle').checked=false}
 function startLocation(center=false){if(!navigator.geolocation){$('nearInfo').textContent='Nettleseren støtter ikke posisjon.';return}$('locationToggle').checked=true;if(watchId===null)watchId=navigator.geolocation.watchPosition(onPosition,onPositionError,{enableHighAccuracy:true,maximumAge:5000,timeout:15000});if(center)navigator.geolocation.getCurrentPosition(p=>{onPosition(p);map.setView([p.coords.latitude,p.coords.longitude],Math.max(map.getZoom(),16))},onPositionError,{enableHighAccuracy:true,timeout:15000})}
