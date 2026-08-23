@@ -30,10 +30,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 
 .new-water-legend{font-size:12px;line-height:1.55;margin:5px 0 0 24px}
 .pipe-key{display:flex;align-items:center;gap:7px;margin:3px 0}
-.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #6a3d8f}
+.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #D32F2F}
 .pipe-tunnel{border-top-style:dashed}
 .pipe-submerged{border-top-style:solid}
-.pipe-trench{border-top:3px dotted #6a3d8f}
+.pipe-trench{border-top:3px dotted #D32F2F}
 
 </style>
 </head>
@@ -155,9 +155,9 @@ const relief=L.tileLayer.wms('https://wms.geonorge.no/skwms1/wms.hoyde-dtm',{lay
 
 const newWaterway=L.layerGroup();
 const sectionStyles={
-  tunnel:{color:'#6a3d8f',weight:3,opacity:.9,dashArray:'6 5'},
-  submerged:{color:'#6a3d8f',weight:3,opacity:.9},
-  trench:{color:'#6a3d8f',weight:3,opacity:.9,dashArray:'2 5'}
+  tunnel:{color:'#D32F2F',weight:3,opacity:.9,dashArray:'6 5'},
+  submerged:{color:'#D32F2F',weight:3,opacity:.9},
+  trench:{color:'#D32F2F',weight:3,opacity:.9,dashArray:'2 5'}
 };
 newWaterwaySections.forEach(section=>{
   L.polyline(section.coords,sectionStyles[section.type])
