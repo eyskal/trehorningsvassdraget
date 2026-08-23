@@ -10,7 +10,9 @@
 html,body,#map{width:100%;height:100%;margin:0;padding:0;overflow:hidden}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-tap-highlight-color:transparent;background:#fff}
 #map{position:absolute;inset:0}
-.stop-marker{background:#e65100;color:#fff;border:2px solid #fff;border-radius:50%;width:28px;height:28px;line-height:28px;text-align:center;font-weight:700;font-size:13px;box-shadow:0 1px 4px rgba(0,0,0,.55)}
+.stop-marker{color:#fff;border:2px solid #fff;border-radius:50%;width:28px;height:28px;line-height:28px;text-align:center;font-weight:700;font-size:13px;box-shadow:0 1px 4px rgba(0,0,0,.55)}
+.stop-air{background:#1565c0}.stop-ground{background:#2e7d32}.stop-underwater{background:#e65100}
+.legend{font-size:12px;line-height:1.7;margin-top:5px}.legend-item{display:flex;align-items:center;gap:7px}.legend-dot{width:12px;height:12px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);flex:none}
 .leaflet-control-attribution{font-size:10px!important;background:rgba(255,255,255,.82)!important}
 .leaflet-popup-content-wrapper{border-radius:8px}.leaflet-popup-content{margin:10px 12px}
 .map-btn{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);box-shadow:var(--shadow);border-radius:8px;min-height:42px;padding:0 13px;font-size:14px;font-weight:600;color:#222;cursor:pointer}
@@ -33,6 +35,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 <div id="layerPanel" role="dialog" aria-label="Kartlag">
   <div class="panel-head"><strong>KARTLAG</strong><button id="panelClose" class="xbtn" type="button" aria-label="Lukk kartlag">×</button></div>
   <label class="row"><input id="stopsToggle" type="checkbox" checked> Fotopunkter</label>
+  <div class="legend" aria-label="Tegnforklaring for fotopunkter">
+    <div class="legend-item"><span class="legend-dot stop-air"></span><span>Luft</span></div>
+    <div class="legend-item"><span class="legend-dot stop-ground"></span><span>Bakke</span></div>
+    <div class="legend-item"><span class="legend-dot stop-underwater"></span><span>Under vann</span></div>
+  </div>
   <div class="section">
     <label class="row"><input id="reliefToggle" type="checkbox" checked> Terrengrelieff</label>
     <div class="range-head"><span>Relieffstyrke</span><span id="reliefValue">45 %</span></div>
@@ -62,7 +69,12 @@ const base=L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/w
 // Kartverkets/Høydedatas nasjonale DTM-WMS. Laget DTM:skyggerelieff viser siste prosjekt som oppdaterer nasjonal høydemodell.
 const relief=L.tileLayer.wms('https://wms.geonorge.no/skwms1/wms.hoyde-dtm',{layers:'DTM:skyggerelieff',format:'image/png',transparent:true,version:'1.3.0',opacity:0,attribution:'Terrengdata © Kartverket',maxZoom:19}).addTo(map);
 
-const stops=L.geoJSON(points,{pointToLayer:(f,ll)=>L.marker(ll,{icon:L.divIcon({className:'',html:`<div class="stop-marker">${f.properties.number}</div>`,iconSize:[34,34],iconAnchor:[17,17]})}),onEachFeature:(f,l)=>l.bindPopup(`<strong>${f.properties.chapter}</strong>`,{autoPan:true})}).addTo(map);
+const airPoints=new Set([1,2,3,11,12,14,20]);
+const groundPoints=new Set([4,5,6,8,13,15,16,17,18]);
+const underwaterPoints=new Set([7,9,10,19]);
+function pointType(n){return airPoints.has(n)?'air':underwaterPoints.has(n)?'underwater':'ground'}
+function pointTypeLabel(n){return airPoints.has(n)?'Luft':underwaterPoints.has(n)?'Under vann':'Bakke'}
+const stops=L.geoJSON(points,{pointToLayer:(f,ll)=>{const type=pointType(f.properties.number);return L.marker(ll,{icon:L.divIcon({className:'',html:`<div class="stop-marker stop-${type}">${f.properties.number}</div>`,iconSize:[34,34],iconAnchor:[17,17]})})},onEachFeature:(f,l)=>l.bindPopup(`<strong>${f.properties.chapter}</strong><br>${pointTypeLabel(f.properties.number)}`,{autoPan:true})}).addTo(map);
 const bounds=stops.getBounds();
 function setInitialView(){const mobile=matchMedia('(max-width:700px)').matches;if(bounds.isValid())map.fitBounds(bounds.pad(mobile?.24:.12),{padding:mobile?[24,24]:[18,18],maxZoom:mobile?14:15});else map.setView([60.01,10.44],14)}
 setInitialView();
