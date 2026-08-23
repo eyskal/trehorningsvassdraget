@@ -33,7 +33,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 .legend-group[hidden],.legend-waterway[hidden],.legend-item[hidden]{display:none!important}.pipe-key{display:flex;align-items:center;gap:6px;white-space:nowrap}.pipe-swatch{width:58px;height:0;display:inline-block;flex:none;border-top:3px solid #e65100}.pipe-tunnel{border-top:0;height:3px;background:repeating-linear-gradient(to right,#e65100 0 13px,transparent 13px 18px,#e65100 18px 21px,transparent 21px 27px)}.pipe-submerged{border-top:3px solid #e65100}.pipe-trench{border-top:3px dotted #e65100}
 @media(max-width:700px){#mapLegend{left:8px;right:8px;bottom:27px;transform:none;max-width:none;flex-wrap:wrap;gap:6px 10px;padding:6px 8px;font-size:11px}.legend-items{gap:8px;flex-wrap:wrap}.legend-waterway{width:100%;padding-left:0;padding-top:5px;border-left:0;border-top:1px solid rgba(0,0,0,.14)}}
 
-.map-text-label{background:transparent;border:0!important;color:#222;font-size:13px;font-weight:700;white-space:nowrap;text-shadow:-1px -1px #fff,1px -1px #fff,-1px 1px #fff,1px 1px #fff,0 0 3px #fff}@media(max-width:700px){.map-text-label{font-size:12px}}
+.map-text-label{background:transparent;border:0!important;color:#e65100;font-size:13px;font-weight:700;white-space:nowrap;text-shadow:-1px -1px #fff,1px -1px #fff,-1px 1px #fff,1px 1px #fff,0 0 3px #fff}@media(max-width:700px){.map-text-label{font-size:13px}}
 </style>
 </head>
 <body>
@@ -154,8 +154,8 @@ const newWaterway=L.layerGroup();
 const waterwayStart=newWaterwaySections[0].coords[0];
 const _last=newWaterwaySections[newWaterwaySections.length-1];
 const waterwayEnd=_last.coords[_last.coords.length-1];
-L.marker(waterwayStart,{interactive:false,icon:L.divIcon({className:'map-text-label',html:'Nytt råvannsinntak',iconSize:null,iconAnchor:[-8,10]})}).addTo(map);
-L.marker(waterwayEnd,{interactive:false,icon:L.divIcon({className:'map-text-label',html:'Vannverket',iconSize:null,iconAnchor:[-8,10]})}).addTo(map);
+L.marker(waterwayStart,{interactive:false,icon:L.divIcon({className:'map-text-label',html:'Nytt råvannsinntak',iconSize:null,iconAnchor:[-8,10]})}).addTo(newWaterway);
+L.marker(waterwayEnd,{interactive:false,icon:L.divIcon({className:'map-text-label',html:'Vannverket',iconSize:null,iconAnchor:[-8,10]})}).addTo(newWaterway);
 const sectionStyles={
   tunnel:{color:'#e65100',weight:3,opacity:.9,dashArray:'18 7 2 7'},
   submerged:{color:'#e65100',weight:3,opacity:.9},
