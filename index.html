@@ -30,7 +30,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 
 #mapLegend{position:absolute;z-index:1000;left:50%;bottom:31px;transform:translateX(-50%);display:flex;align-items:flex-start;gap:12px;max-width:calc(100% - 150px);padding:7px 10px;background:rgba(255,255,255,.84);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);font-size:12px;line-height:1.45;color:#222}
 #mapLegend:empty,#mapLegend[hidden]{display:none!important}.legend-group{display:flex;flex-direction:column;gap:4px}.legend-title{font-size:10px;font-weight:700;letter-spacing:.06em;color:#555}.legend-items{display:flex;gap:10px;align-items:center}.legend-waterway{padding-left:11px;border-left:1px solid rgba(0,0,0,.14)}
-.legend-group[hidden],.legend-waterway[hidden],.legend-item[hidden]{display:none!important}.pipe-key{display:flex;align-items:center;gap:6px;white-space:nowrap}.pipe-swatch{width:58px;height:0;display:inline-block;flex:none;border-top:3px solid #e65100}.pipe-tunnel{border-top:0;height:3px;background:repeating-linear-gradient(to right,#e65100 0 13px,transparent 13px 18px,#e65100 18px 21px,transparent 21px 27px)}.pipe-submerged{border:0;height:8px;background:radial-gradient(circle at 4px 4px,transparent 0 2px,#e65100 2px 3.2px,transparent 3.2px);background-size:10px 8px;background-repeat:repeat-x}.pipe-trench{border-top:3px dotted #e65100}
+.legend-group[hidden],.legend-waterway[hidden],.legend-item[hidden]{display:none!important}.pipe-key{display:flex;align-items:center;gap:6px;white-space:nowrap}.pipe-swatch{width:58px;height:0;display:inline-block;flex:none;border-top:3px solid #e65100}.pipe-tunnel{border-top:0;height:3px;background:repeating-linear-gradient(to right,#e65100 0 13px,transparent 13px 18px,#e65100 18px 21px,transparent 21px 27px)}.pipe-submerged{border-top:3px solid #e65100}.pipe-trench{border-top:3px dotted #e65100}
 @media(max-width:700px){#mapLegend{left:8px;right:8px;bottom:27px;transform:none;max-width:none;flex-wrap:wrap;gap:6px 10px;padding:6px 8px;font-size:11px}.legend-items{gap:8px;flex-wrap:wrap}.legend-waterway{width:100%;padding-left:0;padding-top:5px;border-left:0;border-top:1px solid rgba(0,0,0,.14)}}
 
 </style>
@@ -40,7 +40,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 <button id="layerButton" class="map-btn" type="button" aria-expanded="false">Kartlag</button>
 <div id="layerPanel" role="dialog" aria-label="Kartlag">
   <div class="panel-head"><strong>KARTLAG</strong><button id="panelClose" class="xbtn" type="button" aria-label="Lukk kartlag">×</button></div>
-  <label class="row"><input id="stopsToggle" type="checkbox" checked> 360° foto og video</label>
+  <label class="row"><input id="stopsToggle" type="checkbox" checked> 360° panoramabilder og video</label>
   <div class="section">
     <label class="row"><input id="newWaterwayToggle" type="checkbox"> Ombygging av vassdraget</label>
   </div>
@@ -57,7 +57,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 </div>
 <div id="mapLegend" aria-label="Tegnforklaring">
   <div id="legendPoints" class="legend-group">
-    <div class="legend-title">360° FOTO OG VIDEO</div>
+    <div class="legend-title">360° PANORAMABILDER OG VIDEO</div>
     <div class="legend-items">
       <div id="legendAir" class="legend-item"><span class="legend-dot stop-air"></span><span>Luftfoto</span></div>
       <div id="legendGround" class="legend-item"><span class="legend-dot stop-ground"></span><span>Bakkevideo</span></div>
@@ -156,26 +156,18 @@ const sectionStyles={
   trench:{color:'#e65100',weight:3,opacity:.9,dashArray:'2 5'}
 };
 newWaterwaySections.forEach(section=>{
-  if(section.type==='submerged'){
-    const guide=L.polyline(section.coords,{color:'#e65100',weight:1,opacity:0})
-      .bindTooltip(section.name,{sticky:true}).addTo(newWaterway);
-    const pts=[];
-    for(let i=0;i<section.coords.length-1;i++){
-      const a=L.latLng(section.coords[i]), b=L.latLng(section.coords[i+1]);
-      const dist=a.distanceTo(b);
-      const steps=Math.max(1,Math.floor(dist/18));
-      for(let j=0;j<steps;j++){
-        const t=j/steps;
-        pts.push([a.lat+(b.lat-a.lat)*t,a.lng+(b.lng-a.lng)*t]);
-      }
-    }
-    pts.push(section.coords[section.coords.length-1]);
-    pts.forEach(ll=>L.circleMarker(ll,{radius:3.5,color:'#e65100',weight:2,fill:false,opacity:.95,interactive:false}).addTo(newWaterway));
-  }else{
-    L.polyline(section.coords,sectionStyles[section.type])
-      .bindTooltip(section.name,{sticky:true})
-      .addTo(newWaterway);
-  }
+  L.polyline(section.coords,sectionStyles[section.type]).bindTooltip(section.name,{sticky:true}).addTo(newWaterway);
+});
+const transitionPoints=[];
+for(let i=0;i<newWaterwaySections.length-1;i++){
+  const a=newWaterwaySections[i],b=newWaterwaySections[i+1];
+  if(a.type===b.type) continue;
+  const p=a.coords[a.coords.length-1],q=b.coords[0];
+  if(Math.abs(p[0]-q[0])<0.00001&&Math.abs(p[1]-q[1])<0.00001) transitionPoints.push(p);
+}
+transitionPoints.forEach(ll=>{
+  L.circleMarker(ll,{radius:5,color:'#e65100',weight:2,fillColor:'#fff',fillOpacity:1,opacity:1})
+   .bindTooltip('Overgang mellom utførelsestyper',{sticky:true}).addTo(newWaterway);
 });
 
 const airPoints=new Set([1,2,3,11,12,14,20]);
