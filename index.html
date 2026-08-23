@@ -24,16 +24,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 #layerPanel.open{display:block}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.panel-head strong{font-size:14px;letter-spacing:.03em}.xbtn{border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;padding:4px 7px;border-radius:5px}
 .row{display:flex;align-items:center;gap:9px;min-height:34px;font-size:14px}.row input[type=checkbox]{width:18px;height:18px}.section{border-top:1px solid rgba(0,0,0,.12);margin-top:9px;padding-top:10px}.range-head{display:flex;justify-content:space-between;font-size:13px;margin:5px 0}.range{width:100%;accent-color:#555}
 #nearInfo{font-size:12px;line-height:1.35;color:#444;margin-top:7px;min-height:16px}
-#timeBox{position:absolute;display:none;z-index:1050;right:12px;bottom:32px;width:350px;max-width:calc(100% - 84px);box-sizing:border-box;padding:13px 38px 13px 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:9px;box-shadow:var(--shadow);color:#222;font-size:13px;line-height:1.4}
+#timeBox{position:absolute;display:none;z-index:1050;left:12px;top:12px;width:350px;max-width:calc(100% - 84px);box-sizing:border-box;padding:13px 38px 13px 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:9px;box-shadow:var(--shadow);color:#222;font-size:13px;line-height:1.4}
 #timeBox h2{font-size:15px;margin:0 0 5px}#timeBox p{margin:0}#timeClose{position:absolute;right:5px;top:5px}
-#timeReopen{position:absolute;z-index:1000;right:12px;bottom:32px;display:block}
+#timeReopen{position:absolute;z-index:1000;left:12px;top:12px;display:block}
 .user-dot{width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.55)}
-@media(max-width:700px){#layerButton{top:8px;right:8px}#layerPanel{top:57px;right:8px;width:275px;padding:13px}#timeBox{right:8px;bottom:27px;max-width:calc(100% - 16px);width:330px;font-size:12.5px;padding:11px 34px 11px 12px}#timeBox h2{font-size:14px}#timeReopen{right:8px;bottom:27px}.map-btn{min-height:44px}.stop-marker{width:30px;height:30px;line-height:30px}}
+@media(max-width:700px){#layerButton{top:8px;right:8px}#layerPanel{top:57px;right:8px;width:275px;padding:13px}#timeBox{left:8px;top:8px;max-width:calc(100% - 76px);width:330px;font-size:12.5px;padding:11px 34px 11px 12px}#timeBox h2{font-size:14px}#timeReopen{left:8px;top:8px}.map-btn{min-height:44px}.stop-marker{width:30px;height:30px;line-height:30px}}
 
 #mapLegend{position:absolute;z-index:1000;left:50%;bottom:31px;transform:translateX(-50%);display:flex;align-items:flex-start;gap:12px;max-width:calc(100% - 150px);padding:7px 10px;background:rgba(255,255,255,.84);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);font-size:12px;line-height:1.45;color:#222}
-#mapLegend:empty,#mapLegend[hidden]{display:none!important}.legend-points{display:flex;gap:10px;align-items:center}.legend-waterway{display:flex;gap:10px;align-items:center;padding-left:11px;border-left:1px solid rgba(0,0,0,.14)}
-.legend-points[hidden],.legend-waterway[hidden],.legend-item[hidden]{display:none!important}.pipe-key{display:flex;align-items:center;gap:6px;white-space:nowrap}.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #e65100}.pipe-tunnel{border-top-style:dashed}.pipe-submerged{border-top-style:solid}.pipe-trench{border-top:3px dotted #e65100}
-@media(max-width:700px){#mapLegend{left:8px;right:110px;bottom:27px;transform:none;max-width:none;flex-wrap:wrap;gap:6px 10px;padding:6px 8px;font-size:11px}.legend-points,.legend-waterway{gap:8px;flex-wrap:wrap}.legend-waterway{width:100%;padding-left:0;padding-top:5px;border-left:0;border-top:1px solid rgba(0,0,0,.14)}}
+#mapLegend:empty,#mapLegend[hidden]{display:none!important}.legend-group{display:flex;flex-direction:column;gap:4px}.legend-title{font-size:10px;font-weight:700;letter-spacing:.06em;color:#555}.legend-items{display:flex;gap:10px;align-items:center}.legend-waterway{padding-left:11px;border-left:1px solid rgba(0,0,0,.14)}
+.legend-group[hidden],.legend-waterway[hidden],.legend-item[hidden]{display:none!important}.pipe-key{display:flex;align-items:center;gap:6px;white-space:nowrap}.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #e65100}.pipe-tunnel{border-top:0;height:3px;background:repeating-linear-gradient(to right,#e65100 0 13px,transparent 13px 18px,#e65100 18px 21px,transparent 21px 27px)}.pipe-submerged{border-top-style:solid}.pipe-trench{border-top:3px dotted #e65100}
+@media(max-width:700px){#mapLegend{left:8px;right:110px;bottom:27px;transform:none;max-width:none;flex-wrap:wrap;gap:6px 10px;padding:6px 8px;font-size:11px}.legend-items{gap:8px;flex-wrap:wrap}.legend-waterway{width:100%;padding-left:0;padding-top:5px;border-left:0;border-top:1px solid rgba(0,0,0,.14)}}
 
 </style>
 </head>
@@ -42,7 +42,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 <button id="layerButton" class="map-btn" type="button" aria-expanded="false">Kartlag</button>
 <div id="layerPanel" role="dialog" aria-label="Kartlag">
   <div class="panel-head"><strong>KARTLAG</strong><button id="panelClose" class="xbtn" type="button" aria-label="Lukk kartlag">×</button></div>
-  <label class="row"><input id="stopsToggle" type="checkbox" checked> Fotolokasjoner</label>
+  <label class="row"><input id="stopsToggle" type="checkbox" checked> 360° foto og video</label>
   <div class="section">
     <label class="row"><input id="newWaterwayToggle" type="checkbox"> Ombygging av vassdraget</label>
   </div>
@@ -58,15 +58,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
   </div>
 </div>
 <div id="mapLegend" aria-label="Tegnforklaring">
-  <div id="legendPoints" class="legend-points">
-    <div id="legendAir" class="legend-item"><span class="legend-dot stop-air"></span><span>Luft</span></div>
-    <div id="legendGround" class="legend-item"><span class="legend-dot stop-ground"></span><span>Bakke</span></div>
-    <div id="legendUnderwater" class="legend-item"><span class="legend-dot stop-underwater"></span><span>Under vann</span></div>
+  <div id="legendPoints" class="legend-group">
+    <div class="legend-title">360° FOTO OG VIDEO</div>
+    <div class="legend-items">
+      <div id="legendAir" class="legend-item"><span class="legend-dot stop-air"></span><span>Luftfoto</span></div>
+      <div id="legendGround" class="legend-item"><span class="legend-dot stop-ground"></span><span>Bakke</span></div>
+      <div id="legendUnderwater" class="legend-item"><span class="legend-dot stop-underwater"></span><span>Under vann</span></div>
+    </div>
   </div>
-  <div id="legendWaterway" class="legend-waterway" hidden>
-    <div class="pipe-key"><span class="pipe-swatch pipe-tunnel"></span><span>Boret vanntunnel</span></div>
-    <div class="pipe-key"><span class="pipe-swatch pipe-submerged"></span><span>Nedsenket rør</span></div>
-    <div class="pipe-key"><span class="pipe-swatch pipe-trench"></span><span>Rør i grøft</span></div>
+  <div id="legendWaterway" class="legend-group legend-waterway" hidden>
+    <div class="legend-title">OMBYGGING AV VASSDRAGET</div>
+    <div class="legend-items">
+      <div class="pipe-key"><span class="pipe-swatch pipe-tunnel"></span><span>Boret vanntunnel</span></div>
+      <div class="pipe-key"><span class="pipe-swatch pipe-submerged"></span><span>Nedsenket rør</span></div>
+      <div class="pipe-key"><span class="pipe-swatch pipe-trench"></span><span>Rør i grøft</span></div>
+    </div>
   </div>
 </div>
 <div id="timeBox">
@@ -153,7 +159,7 @@ const relief=L.tileLayer.wms('https://wms.geonorge.no/skwms1/wms.hoyde-dtm',{lay
 
 const newWaterway=L.layerGroup();
 const sectionStyles={
-  tunnel:{color:'#e65100',weight:3,opacity:.9,dashArray:'6 5'},
+  tunnel:{color:'#e65100',weight:3,opacity:.9,dashArray:'18 7 2 7'},
   submerged:{color:'#e65100',weight:3,opacity:.9},
   trench:{color:'#e65100',weight:3,opacity:.9,dashArray:'2 5'}
 };
@@ -167,7 +173,7 @@ const airPoints=new Set([1,2,3,11,12,14,20]);
 const groundPoints=new Set([4,5,6,8,13,15,16,17,18]);
 const underwaterPoints=new Set([7,9,10,19]);
 function pointType(n){return airPoints.has(n)?'air':underwaterPoints.has(n)?'underwater':'ground'}
-function pointTypeLabel(n){return airPoints.has(n)?'Luft':underwaterPoints.has(n)?'Under vann':'Bakke'}
+function pointTypeLabel(n){return airPoints.has(n)?'Luftfoto':underwaterPoints.has(n)?'Under vann':'Bakke'}
 const stopLayers={air:L.layerGroup(),ground:L.layerGroup(),underwater:L.layerGroup()};
 const stopBounds=L.latLngBounds([]);
 points.features.forEach(f=>{
