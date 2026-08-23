@@ -17,21 +17,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 .leaflet-popup-content-wrapper{border-radius:8px}.leaflet-popup-content{margin:10px 12px}
 .map-btn{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);box-shadow:var(--shadow);border-radius:8px;min-height:42px;padding:0 13px;font-size:14px;font-weight:600;color:#222;cursor:pointer}
 #layerButton{position:absolute;z-index:1000;right:12px;top:12px}
-#locateButton{position:absolute;z-index:1000;right:12px;bottom:38px;width:44px;padding:0;font-size:20px}
 #layerPanel{position:absolute;z-index:1100;right:12px;top:62px;width:285px;max-width:calc(100% - 24px);padding:14px;background:var(--panel);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);display:none;color:#222}
 #layerPanel.open{display:block}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.panel-head strong{font-size:14px;letter-spacing:.03em}.xbtn{border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;padding:4px 7px;border-radius:5px}
 .row{display:flex;align-items:center;gap:9px;min-height:34px;font-size:14px}.row input[type=checkbox]{width:18px;height:18px}.section{border-top:1px solid rgba(0,0,0,.12);margin-top:9px;padding-top:10px}.range-head{display:flex;justify-content:space-between;font-size:13px;margin:5px 0}.range{width:100%;accent-color:#555}
 #nearInfo{font-size:12px;line-height:1.35;color:#444;margin-top:7px;min-height:16px}
-#timeBox{position:absolute;display:none;z-index:1050;left:12px;bottom:32px;width:350px;max-width:calc(100% - 84px);box-sizing:border-box;padding:13px 38px 13px 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:9px;box-shadow:var(--shadow);color:#222;font-size:13px;line-height:1.4}
+#timeBox{position:absolute;display:none;z-index:1050;right:12px;bottom:32px;width:350px;max-width:calc(100% - 84px);box-sizing:border-box;padding:13px 38px 13px 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:9px;box-shadow:var(--shadow);color:#222;font-size:13px;line-height:1.4}
 #timeBox h2{font-size:15px;margin:0 0 5px}#timeBox p{margin:0}#timeClose{position:absolute;right:5px;top:5px}
-#timeReopen{position:absolute;z-index:1000;left:12px;bottom:32px;display:block}
+#timeReopen{position:absolute;z-index:1000;right:12px;bottom:32px;display:block}
 .user-dot{width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.55)}
-@media(max-width:700px){#layerButton{top:8px;right:8px}#layerPanel{top:57px;right:8px;width:275px;padding:13px}#locateButton{right:8px;bottom:32px}#timeBox{left:8px;bottom:27px;max-width:calc(100% - 68px);width:330px;font-size:12.5px;padding:11px 34px 11px 12px}#timeBox h2{font-size:14px}#timeReopen{left:8px;bottom:27px}.map-btn{min-height:44px}.stop-marker{width:30px;height:30px;line-height:30px}}
+@media(max-width:700px){#layerButton{top:8px;right:8px}#layerPanel{top:57px;right:8px;width:275px;padding:13px}#timeBox{right:8px;bottom:27px;max-width:calc(100% - 16px);width:330px;font-size:12.5px;padding:11px 34px 11px 12px}#timeBox h2{font-size:14px}#timeReopen{right:8px;bottom:27px}.map-btn{min-height:44px}.stop-marker{width:30px;height:30px;line-height:30px}}
 
 #mapLegend{position:absolute;z-index:1000;left:50%;bottom:31px;transform:translateX(-50%);display:flex;align-items:flex-start;gap:12px;max-width:calc(100% - 150px);padding:7px 10px;background:rgba(255,255,255,.84);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);font-size:12px;line-height:1.45;color:#222}
-#mapLegend:empty{display:none}.legend-points{display:flex;gap:10px;align-items:center}.legend-waterway{display:flex;gap:10px;align-items:center;padding-left:11px;border-left:1px solid rgba(0,0,0,.14)}
-.legend-waterway[hidden],.legend-item[hidden]{display:none!important}.pipe-key{display:flex;align-items:center;gap:6px;white-space:nowrap}.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #e65100}.pipe-tunnel{border-top-style:dashed}.pipe-submerged{border-top-style:solid}.pipe-trench{border-top:3px dotted #e65100}
-@media(max-width:700px){#mapLegend{left:8px;right:60px;bottom:82px;transform:none;max-width:none;flex-wrap:wrap;gap:6px 10px;padding:6px 8px;font-size:11px}.legend-points,.legend-waterway{gap:8px;flex-wrap:wrap}.legend-waterway{width:100%;padding-left:0;padding-top:5px;border-left:0;border-top:1px solid rgba(0,0,0,.14)}}
+#mapLegend:empty,#mapLegend[hidden]{display:none!important}.legend-points{display:flex;gap:10px;align-items:center}.legend-waterway{display:flex;gap:10px;align-items:center;padding-left:11px;border-left:1px solid rgba(0,0,0,.14)}
+.legend-points[hidden],.legend-waterway[hidden],.legend-item[hidden]{display:none!important}.pipe-key{display:flex;align-items:center;gap:6px;white-space:nowrap}.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #e65100}.pipe-tunnel{border-top-style:dashed}.pipe-submerged{border-top-style:solid}.pipe-trench{border-top:3px dotted #e65100}
+@media(max-width:700px){#mapLegend{left:8px;right:110px;bottom:27px;transform:none;max-width:none;flex-wrap:wrap;gap:6px 10px;padding:6px 8px;font-size:11px}.legend-points,.legend-waterway{gap:8px;flex-wrap:wrap}.legend-waterway{width:100%;padding-left:0;padding-top:5px;border-left:0;border-top:1px solid rgba(0,0,0,.14)}}
 
 </style>
 </head>
@@ -40,9 +39,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 <button id="layerButton" class="map-btn" type="button" aria-expanded="false">Kartlag</button>
 <div id="layerPanel" role="dialog" aria-label="Kartlag">
   <div class="panel-head"><strong>KARTLAG</strong><button id="panelClose" class="xbtn" type="button" aria-label="Lukk kartlag">×</button></div>
-  <label class="row"><input id="airToggle" type="checkbox" checked> Luft</label>
-  <label class="row"><input id="groundToggle" type="checkbox" checked> Bakke</label>
-  <label class="row"><input id="underwaterToggle" type="checkbox" checked> Under vann</label>
+  <label class="row"><input id="stopsToggle" type="checkbox" checked> Fotolokasjoner</label>
   <div class="section">
     <label class="row"><input id="newWaterwayToggle" type="checkbox"> Ombygging av vassdraget</label>
   </div>
@@ -57,9 +54,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
     <div id="nearInfo">Posisjon er ikke aktivert.</div>
   </div>
 </div>
-<button id="locateButton" class="map-btn" type="button" title="Vis min posisjon" aria-label="Vis min posisjon">◎</button>
 <div id="mapLegend" aria-label="Tegnforklaring">
-  <div class="legend-points">
+  <div id="legendPoints" class="legend-points">
     <div id="legendAir" class="legend-item"><span class="legend-dot stop-air"></span><span>Luft</span></div>
     <div id="legendGround" class="legend-item"><span class="legend-dot stop-ground"></span><span>Bakke</span></div>
     <div id="legendUnderwater" class="legend-item"><span class="legend-dot stop-underwater"></span><span>Under vann</span></div>
@@ -193,14 +189,26 @@ function setStopLayer(type,on){
   const id=type==='air'?'legendAir':type==='ground'?'legendGround':'legendUnderwater';
   $(id).hidden=!on;
 }
-$('airToggle').addEventListener('change',e=>setStopLayer('air',e.target.checked));
-$('groundToggle').addEventListener('change',e=>setStopLayer('ground',e.target.checked));
-$('underwaterToggle').addEventListener('change',e=>setStopLayer('underwater',e.target.checked));
+function updateLegendVisibility(){
+  const photosOn=$('stopsToggle').checked;
+  const waterwayOn=$('newWaterwayToggle').checked;
+  $('legendPoints').hidden=!photosOn;
+  $('legendWaterway').hidden=!waterwayOn;
+  $('mapLegend').hidden=!(photosOn||waterwayOn);
+}
+$('stopsToggle').addEventListener('change',e=>{
+  const on=e.target.checked;
+  setStopLayer('air',on);
+  setStopLayer('ground',on);
+  setStopLayer('underwater',on);
+  updateLegendVisibility();
+});
 
 $('newWaterwayToggle').addEventListener('change',e=>{
   if(e.target.checked)newWaterway.addTo(map);else map.removeLayer(newWaterway);
-  $('legendWaterway').hidden=!e.target.checked;
+  updateLegendVisibility();
 });
+updateLegendVisibility();
 
 function setRelief(v){v=Math.max(0,Math.min(100,Number(v)||0));range.value=v;reliefValue.textContent=Math.round(v)+' %';relief.setOpacity(reliefToggle.checked?v/100:0)}
 range.addEventListener('input',()=>{stopIntro();setRelief(range.value)});
@@ -222,7 +230,7 @@ function onPosition(pos){const ll=L.latLng(pos.coords.latitude,pos.coords.longit
 function onPositionError(err){$('nearInfo').textContent='Posisjon kunne ikke hentes: '+err.message;$('locationToggle').checked=false}
 function startLocation(center=false){if(!navigator.geolocation){$('nearInfo').textContent='Nettleseren støtter ikke posisjon.';return}$('locationToggle').checked=true;if(watchId===null)watchId=navigator.geolocation.watchPosition(onPosition,onPositionError,{enableHighAccuracy:true,maximumAge:5000,timeout:15000});if(center)navigator.geolocation.getCurrentPosition(p=>{onPosition(p);map.setView([p.coords.latitude,p.coords.longitude],Math.max(map.getZoom(),16))},onPositionError,{enableHighAccuracy:true,timeout:15000})}
 function stopLocation(){if(watchId!==null){navigator.geolocation.clearWatch(watchId);watchId=null}if(userMarker){map.removeLayer(userMarker);userMarker=null}if(accuracyCircle){map.removeLayer(accuracyCircle);accuracyCircle=null}if(nearestLine){map.removeLayer(nearestLine);nearestLine=null}lastPosition=null;updateNearest()}
-$('locationToggle').addEventListener('change',e=>e.target.checked?startLocation(false):stopLocation());$('nearestToggle').addEventListener('change',()=>{if(!lastPosition&&$('nearestToggle').checked)startLocation(false);updateNearest()});$('locateButton').addEventListener('click',()=>startLocation(true));
+$('locationToggle').addEventListener('change',e=>e.target.checked?startLocation(false):stopLocation());$('nearestToggle').addEventListener('change',()=>{if(!lastPosition&&$('nearestToggle').checked)startLocation(false);updateNearest()});
 
 function resizeMap(){setTimeout(()=>map.invalidateSize(false),0)}window.addEventListener('resize',resizeMap);window.addEventListener('orientationchange',()=>setTimeout(resizeMap,250));window.addEventListener('load',resizeMap);
 </script>
