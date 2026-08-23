@@ -12,7 +12,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 #map{position:absolute;inset:0}
 .stop-marker{color:#fff;border:2px solid #fff;border-radius:50%;width:28px;height:28px;line-height:28px;text-align:center;font-weight:700;font-size:13px;box-shadow:0 1px 4px rgba(0,0,0,.55)}
 .stop-air{background:#1565c0}.stop-ground{background:#2e7d32}.stop-underwater{background:#e65100}
-.legend{font-size:12px;line-height:1.7;margin-top:5px}.legend-item{display:flex;align-items:center;gap:7px}.legend-dot{width:12px;height:12px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);flex:none}
+.legend-item{display:flex;align-items:center;gap:6px;white-space:nowrap}.legend-dot{width:12px;height:12px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);flex:none}
 .leaflet-control-attribution{font-size:10px!important;background:rgba(255,255,255,.82)!important}
 .leaflet-popup-content-wrapper{border-radius:8px}.leaflet-popup-content{margin:10px 12px}
 .map-btn{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);box-shadow:var(--shadow);border-radius:8px;min-height:42px;padding:0 13px;font-size:14px;font-weight:600;color:#222;cursor:pointer}
@@ -28,12 +28,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 .user-dot{width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.55)}
 @media(max-width:700px){#layerButton{top:8px;right:8px}#layerPanel{top:57px;right:8px;width:275px;padding:13px}#locateButton{right:8px;bottom:32px}#timeBox{left:8px;bottom:27px;max-width:calc(100% - 68px);width:330px;font-size:12.5px;padding:11px 34px 11px 12px}#timeBox h2{font-size:14px}#timeReopen{left:8px;bottom:27px}.map-btn{min-height:44px}.stop-marker{width:30px;height:30px;line-height:30px}}
 
-.new-water-legend{font-size:12px;line-height:1.55;margin:5px 0 0 24px}
-.pipe-key{display:flex;align-items:center;gap:7px;margin:3px 0}
-.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #D32F2F}
-.pipe-tunnel{border-top-style:dashed}
-.pipe-submerged{border-top-style:solid}
-.pipe-trench{border-top:3px dotted #D32F2F}
+#mapLegend{position:absolute;z-index:1000;left:50%;bottom:31px;transform:translateX(-50%);display:flex;align-items:flex-start;gap:12px;max-width:calc(100% - 150px);padding:7px 10px;background:rgba(255,255,255,.84);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);font-size:12px;line-height:1.45;color:#222}
+#mapLegend:empty{display:none}.legend-points{display:flex;gap:10px;align-items:center}.legend-waterway{display:flex;gap:10px;align-items:center;padding-left:11px;border-left:1px solid rgba(0,0,0,.14)}
+.legend-waterway[hidden],.legend-item[hidden]{display:none!important}.pipe-key{display:flex;align-items:center;gap:6px;white-space:nowrap}.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #e65100}.pipe-tunnel{border-top-style:dashed}.pipe-submerged{border-top-style:solid}.pipe-trench{border-top:3px dotted #e65100}
+@media(max-width:700px){#mapLegend{left:8px;right:60px;bottom:27px;transform:none;max-width:none;flex-wrap:wrap;gap:6px 10px;padding:6px 8px;font-size:11px}.legend-points,.legend-waterway{gap:8px;flex-wrap:wrap}.legend-waterway{width:100%;padding-left:0;padding-top:5px;border-left:0;border-top:1px solid rgba(0,0,0,.14)}}
 
 </style>
 </head>
@@ -42,22 +40,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 <button id="layerButton" class="map-btn" type="button" aria-expanded="false">Kartlag</button>
 <div id="layerPanel" role="dialog" aria-label="Kartlag">
   <div class="panel-head"><strong>KARTLAG</strong><button id="panelClose" class="xbtn" type="button" aria-label="Lukk kartlag">×</button></div>
-  <label class="row"><input id="stopsToggle" type="checkbox" checked> Fotopunkter</label>
-  <div class="legend" aria-label="Tegnforklaring for fotopunkter">
-    <div class="legend-item"><span class="legend-dot stop-air"></span><span>Luft</span></div>
-    <div class="legend-item"><span class="legend-dot stop-ground"></span><span>Bakke</span></div>
-    <div class="legend-item"><span class="legend-dot stop-underwater"></span><span>Under vann</span></div>
-  </div>
-
+  <label class="row"><input id="airToggle" type="checkbox" checked> Luft</label>
+  <label class="row"><input id="groundToggle" type="checkbox" checked> Bakke</label>
+  <label class="row"><input id="underwaterToggle" type="checkbox" checked> Under vann</label>
   <div class="section">
-    <strong style="font-size:13px">Ombygging av vassdraget</strong>
-    <label class="row"><input id="newWaterwayToggle" type="checkbox"> Vis planlagte tiltak</label>
-    <div class="new-water-legend" aria-label="Planlagte tiltak">
-      <div class="pipe-key"><span class="pipe-swatch pipe-tunnel"></span><span>Boret vanntunnel</span></div>
-      <div class="pipe-key"><span class="pipe-swatch pipe-submerged"></span><span>Nedsenket rør</span></div>
-      <div class="pipe-key"><span class="pipe-swatch pipe-trench"></span><span>Rør i grøft</span></div>
-    </div>
-    <div style="font-size:11px;color:#555;font-style:italic;margin:8px 0 0 24px">Basert på konsesjonssøknaden.</div>
+    <label class="row"><input id="newWaterwayToggle" type="checkbox"> Ombygging av vassdraget</label>
   </div>
   <div class="section">
     <label class="row"><input id="reliefToggle" type="checkbox" checked> Terrengrelieff</label>
@@ -71,6 +58,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
   </div>
 </div>
 <button id="locateButton" class="map-btn" type="button" title="Vis min posisjon" aria-label="Vis min posisjon">◎</button>
+<div id="mapLegend" aria-label="Tegnforklaring">
+  <div class="legend-points">
+    <div id="legendAir" class="legend-item"><span class="legend-dot stop-air"></span><span>Luft</span></div>
+    <div id="legendGround" class="legend-item"><span class="legend-dot stop-ground"></span><span>Bakke</span></div>
+    <div id="legendUnderwater" class="legend-item"><span class="legend-dot stop-underwater"></span><span>Under vann</span></div>
+  </div>
+  <div id="legendWaterway" class="legend-waterway" hidden>
+    <div class="pipe-key"><span class="pipe-swatch pipe-tunnel"></span><span>Boret vanntunnel</span></div>
+    <div class="pipe-key"><span class="pipe-swatch pipe-submerged"></span><span>Nedsenket rør</span></div>
+    <div class="pipe-key"><span class="pipe-swatch pipe-trench"></span><span>Rør i grøft</span></div>
+  </div>
+</div>
 <div id="timeBox">
   <button id="timeClose" class="xbtn" type="button" aria-label="Lukk informasjon">×</button>
   <h2>Om kartet</h2>
@@ -155,9 +154,9 @@ const relief=L.tileLayer.wms('https://wms.geonorge.no/skwms1/wms.hoyde-dtm',{lay
 
 const newWaterway=L.layerGroup();
 const sectionStyles={
-  tunnel:{color:'#D32F2F',weight:3,opacity:.9,dashArray:'6 5'},
-  submerged:{color:'#D32F2F',weight:3,opacity:.9},
-  trench:{color:'#D32F2F',weight:3,opacity:.9,dashArray:'2 5'}
+  tunnel:{color:'#e65100',weight:3,opacity:.9,dashArray:'6 5'},
+  submerged:{color:'#e65100',weight:3,opacity:.9},
+  trench:{color:'#e65100',weight:3,opacity:.9,dashArray:'2 5'}
 };
 newWaterwaySections.forEach(section=>{
   L.polyline(section.coords,sectionStyles[section.type])
@@ -170,8 +169,17 @@ const groundPoints=new Set([4,5,6,8,13,15,16,17,18]);
 const underwaterPoints=new Set([7,9,10,19]);
 function pointType(n){return airPoints.has(n)?'air':underwaterPoints.has(n)?'underwater':'ground'}
 function pointTypeLabel(n){return airPoints.has(n)?'Luft':underwaterPoints.has(n)?'Under vann':'Bakke'}
-const stops=L.geoJSON(points,{pointToLayer:(f,ll)=>{const type=pointType(f.properties.number);return L.marker(ll,{icon:L.divIcon({className:'',html:`<div class="stop-marker stop-${type}">${f.properties.number}</div>`,iconSize:[34,34],iconAnchor:[17,17]})})},onEachFeature:(f,l)=>l.bindPopup(`<strong>${f.properties.chapter}</strong><br>${pointTypeLabel(f.properties.number)}`,{autoPan:true})}).addTo(map);
-const bounds=stops.getBounds();
+const stopLayers={air:L.layerGroup(),ground:L.layerGroup(),underwater:L.layerGroup()};
+const stopBounds=L.latLngBounds([]);
+points.features.forEach(f=>{
+  const n=f.properties.number,type=pointType(n),[lng,lat]=f.geometry.coordinates,ll=L.latLng(lat,lng);
+  const marker=L.marker(ll,{icon:L.divIcon({className:'',html:`<div class="stop-marker stop-${type}">${n}</div>`,iconSize:[34,34],iconAnchor:[17,17]})});
+  marker.bindPopup(`<strong>${f.properties.chapter}</strong><br>${pointTypeLabel(n)}`,{autoPan:true});
+  marker.addTo(stopLayers[type]);
+  stopBounds.extend(ll);
+});
+Object.values(stopLayers).forEach(layer=>layer.addTo(map));
+const bounds=stopBounds;
 function setInitialView(){const mobile=matchMedia('(max-width:700px)').matches;if(bounds.isValid())map.fitBounds(bounds.pad(mobile?.24:.12),{padding:mobile?[24,24]:[18,18],maxZoom:mobile?14:15});else map.setView([60.01,10.44],14)}
 setInitialView();
 
@@ -179,10 +187,19 @@ const $=id=>document.getElementById(id);
 const panel=$('layerPanel'),layerButton=$('layerButton'),range=$('reliefRange'),reliefValue=$('reliefValue'),reliefToggle=$('reliefToggle');
 function panelOpen(on){panel.classList.toggle('open',on);layerButton.setAttribute('aria-expanded',String(on))}
 layerButton.addEventListener('click',()=>panelOpen(!panel.classList.contains('open')));$('panelClose').addEventListener('click',()=>panelOpen(false));
-$('stopsToggle').addEventListener('change',e=>e.target.checked?stops.addTo(map):map.removeLayer(stops));
+function setStopLayer(type,on){
+  const layer=stopLayers[type];
+  if(on){if(!map.hasLayer(layer))layer.addTo(map)}else if(map.hasLayer(layer))map.removeLayer(layer);
+  const id=type==='air'?'legendAir':type==='ground'?'legendGround':'legendUnderwater';
+  $(id).hidden=!on;
+}
+$('airToggle').addEventListener('change',e=>setStopLayer('air',e.target.checked));
+$('groundToggle').addEventListener('change',e=>setStopLayer('ground',e.target.checked));
+$('underwaterToggle').addEventListener('change',e=>setStopLayer('underwater',e.target.checked));
 
 $('newWaterwayToggle').addEventListener('change',e=>{
-  e.target.checked ? newWaterway.addTo(map) : map.removeLayer(newWaterway);
+  if(e.target.checked)newWaterway.addTo(map);else map.removeLayer(newWaterway);
+  $('legendWaterway').hidden=!e.target.checked;
 });
 
 function setRelief(v){v=Math.max(0,Math.min(100,Number(v)||0));range.value=v;reliefValue.textContent=Math.round(v)+' %';relief.setOpacity(reliefToggle.checked?v/100:0)}
