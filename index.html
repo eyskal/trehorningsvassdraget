@@ -18,7 +18,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 .map-btn{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);box-shadow:var(--shadow);border-radius:8px;min-height:42px;padding:0 13px;font-size:14px;font-weight:600;color:#222;cursor:pointer}
 #layerButton{position:absolute;z-index:1000;right:12px;top:12px}
 #locateButton{position:absolute;z-index:1000;right:12px;bottom:38px;width:44px;padding:0;font-size:20px}
-#layerPanel{position:absolute;z-index:1100;right:12px;top:62px;width:290px;max-width:calc(100% - 24px);padding:14px;background:var(--panel);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);display:none;color:#222}
+#layerPanel{position:absolute;z-index:1100;right:12px;top:62px;width:270px;max-width:calc(100% - 24px);padding:14px;background:var(--panel);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);display:none;color:#222}
 #layerPanel.open{display:block}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.panel-head strong{font-size:14px;letter-spacing:.03em}.xbtn{border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;padding:4px 7px;border-radius:5px}
 .row{display:flex;align-items:center;gap:9px;min-height:34px;font-size:14px}.row input[type=checkbox]{width:18px;height:18px}.section{border-top:1px solid rgba(0,0,0,.12);margin-top:9px;padding-top:10px}.range-head{display:flex;justify-content:space-between;font-size:13px;margin:5px 0}.range{width:100%;accent-color:#555}
 #nearInfo{font-size:12px;line-height:1.35;color:#444;margin-top:7px;min-height:16px}
@@ -26,17 +26,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 #timeBox h2{font-size:15px;margin:0 0 5px}#timeBox p{margin:0}#timeClose{position:absolute;right:5px;top:5px}
 #timeReopen{position:absolute;z-index:1000;left:12px;bottom:32px;display:block}
 .user-dot{width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.55)}
-@media(max-width:700px){#layerButton{top:8px;right:8px}#layerPanel{top:57px;right:8px;width:280px;padding:13px}#locateButton{right:8px;bottom:32px}#timeBox{left:8px;bottom:27px;max-width:calc(100% - 68px);width:330px;font-size:12.5px;padding:11px 34px 11px 12px}#timeBox h2{font-size:14px}#timeReopen{left:8px;bottom:27px}.map-btn{min-height:44px}.stop-marker{width:30px;height:30px;line-height:30px}}
-
-.water-legend{font-size:12px;line-height:1.6;margin-top:5px}
-.line-key{display:flex;align-items:center;gap:8px;margin:2px 0}
-.line-swatch{width:28px;height:0;border-top:3px solid #1976d2;display:inline-block;flex:none}
-.line-swatch.planned{border-top-color:#7b1fa2;border-top-style:dashed}
-.line-swatch.affected{border-top-color:#d32f2f;border-top-style:dashed}
-.phase-switch{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}
-.phase-switch button{border:1px solid var(--border);background:rgba(255,255,255,.72);border-radius:7px;min-height:36px;font-size:13px;font-weight:600;cursor:pointer}
-.phase-switch button.active{background:#222;color:#fff;border-color:#222}
-.water-arrow{font-size:17px;font-weight:800;color:#1976d2;text-shadow:0 1px 2px #fff,0 0 2px #fff}
+@media(max-width:700px){#layerButton{top:8px;right:8px}#layerPanel{top:57px;right:8px;width:260px;padding:13px}#locateButton{right:8px;bottom:32px}#timeBox{left:8px;bottom:27px;max-width:calc(100% - 68px);width:330px;font-size:12.5px;padding:11px 34px 11px 12px}#timeBox h2{font-size:14px}#timeReopen{left:8px;bottom:27px}.map-btn{min-height:44px}.stop-marker{width:30px;height:30px;line-height:30px}}
 </style>
 </head>
 <body>
@@ -49,25 +39,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
     <div class="legend-item"><span class="legend-dot stop-air"></span><span>Luft</span></div>
     <div class="legend-item"><span class="legend-dot stop-ground"></span><span>Bakke</span></div>
     <div class="legend-item"><span class="legend-dot stop-underwater"></span><span>Under vann</span></div>
-  </div>
-
-  <div class="section">
-    <strong style="font-size:13px">VASSDRAG OG TILTAK</strong>
-    <label class="row"><input id="waterToggle" type="checkbox" checked> Vannveier</label>
-    <label class="row"><input id="plannedToggle" type="checkbox"> Planlagt vannledning</label>
-    <label class="row"><input id="affectedToggle" type="checkbox"> Berørt vannføring</label>
-    <div class="water-legend">
-      <div class="line-key"><span class="line-swatch"></span><span>Eksisterende vannvei</span></div>
-      <div class="line-key"><span class="line-swatch planned"></span><span>Omsøkt vannledning</span></div>
-      <div class="line-key"><span class="line-swatch affected"></span><span>Redusert vannføring</span></div>
-    </div>
-    <div class="phase-switch">
-      <button id="beforeBtn" class="active" type="button">Før</button>
-      <button id="plannedBtn" type="button">Planlagt</button>
-    </div>
-    <div style="font-size:11px;line-height:1.35;color:#555;margin-top:7px">
-      Planlagt trasé er forenklet etter konsesjonssøknaden (2025).
-    </div>
   </div>
   <div class="section">
     <label class="row"><input id="reliefToggle" type="checkbox" checked> Terrengrelieff</label>
@@ -92,63 +63,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 const points={"type":"FeatureCollection","features":[
 {"type":"Feature","properties":{"number":1,"chapter":"1/20"},"geometry":{"type":"Point","coordinates":[10.4381774,60.0133233]}},{"type":"Feature","properties":{"number":2,"chapter":"2/20"},"geometry":{"type":"Point","coordinates":[10.4372333,60.0142479]}},{"type":"Feature","properties":{"number":3,"chapter":"3/20"},"geometry":{"type":"Point","coordinates":[10.4344614,60.0173123]}},{"type":"Feature","properties":{"number":4,"chapter":"4/20"},"geometry":{"type":"Point","coordinates":[10.4343084,60.0180639]}},{"type":"Feature","properties":{"number":5,"chapter":"5/20"},"geometry":{"type":"Point","coordinates":[10.4345013,60.017636]}},{"type":"Feature","properties":{"number":6,"chapter":"6/20"},"geometry":{"type":"Point","coordinates":[10.4344023,60.0171108]}},{"type":"Feature","properties":{"number":7,"chapter":"7/20"},"geometry":{"type":"Point","coordinates":[10.4344704,60.0171112]}},{"type":"Feature","properties":{"number":8,"chapter":"8/20"},"geometry":{"type":"Point","coordinates":[10.4346985,60.0160577]}},{"type":"Feature","properties":{"number":9,"chapter":"9/20"},"geometry":{"type":"Point","coordinates":[10.4346127,60.0153928]}},{"type":"Feature","properties":{"number":10,"chapter":"10/20"},"geometry":{"type":"Point","coordinates":[10.4360421,60.0145224]}},{"type":"Feature","properties":{"number":11,"chapter":"11/20"},"geometry":{"type":"Point","coordinates":[10.4450646,60.0120054]}},{"type":"Feature","properties":{"number":12,"chapter":"12/20"},"geometry":{"type":"Point","coordinates":[10.4502894,60.007695]}},{"type":"Feature","properties":{"number":13,"chapter":"13/20"},"geometry":{"type":"Point","coordinates":[10.4501097,60.0079727]}},{"type":"Feature","properties":{"number":14,"chapter":"14/20"},"geometry":{"type":"Point","coordinates":[10.4454994,60.0043004]}},{"type":"Feature","properties":{"number":15,"chapter":"15/20"},"geometry":{"type":"Point","coordinates":[10.4431765,60.0065153]}},{"type":"Feature","properties":{"number":16,"chapter":"16/20"},"geometry":{"type":"Point","coordinates":[10.4442118,60.0057752]}},{"type":"Feature","properties":{"number":17,"chapter":"17/20"},"geometry":{"type":"Point","coordinates":[10.4464354,60.0037412]}},{"type":"Feature","properties":{"number":18,"chapter":"18/20"},"geometry":{"type":"Point","coordinates":[10.4479669,60.0034109]}},{"type":"Feature","properties":{"number":19,"chapter":"19/20"},"geometry":{"type":"Point","coordinates":[10.4465722,60.0037166]}},{"type":"Feature","properties":{"number":20,"chapter":"20/20"},"geometry":{"type":"Point","coordinates":[10.455449,60.002505]}}]};
 
-
-// Forenklede vassdrags- og tiltakslinjer basert på NVEs publiserte konsesjonssøknad.
-// Linjene er til dokumentarisk oversikt og er ikke prosjekteringsdata.
-const byvannselvaCoords=[
-  [60.0180639,10.4343084],[60.0176360,10.4345013],[60.0171108,10.4344023],
-  [60.0160577,10.4346985],[60.0153928,10.4346127],[60.0145224,10.4360421],
-  [60.0142479,10.4372333],[60.0133233,10.4381774]
-];
-const smavannselvaCoords=[
-  [60.0043004,10.4454994],[60.0037412,10.4464354],[60.0037166,10.4465722],
-  [60.0034109,10.4479669],[60.0029000,10.4515000],[60.0025050,10.4554490]
-];
-const plannedPipeCoords=[
-  [60.0180639,10.4343084],[60.0153000,10.4370000],[60.0122000,10.4447000],
-  [60.0080000,10.4500000],[60.0046000,10.4470000],[60.0025050,10.4554490],
-  [59.9988000,10.4550000],[59.9947000,10.4540000]
-];
-
 const map=L.map('map',{zoomControl:true,attributionControl:true,scrollWheelZoom:true,touchZoom:true,dragging:true,doubleClickZoom:true,boxZoom:false,keyboard:true});
 const base=L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png',{attribution:'&copy; Kartverket',maxZoom:18,minZoom:5,crossOrigin:true}).addTo(map);
 
 // Kartverkets/Høydedatas nasjonale DTM-WMS. Laget DTM:skyggerelieff viser siste prosjekt som oppdaterer nasjonal høydemodell.
 const relief=L.tileLayer.wms('https://wms.geonorge.no/skwms1/wms.hoyde-dtm',{layers:'DTM:skyggerelieff',format:'image/png',transparent:true,version:'1.3.0',opacity:0,attribution:'Terrengdata © Kartverket',maxZoom:19}).addTo(map);
-
-
-const waterStyle={color:'#1976d2',weight:3,opacity:.85};
-const affectedStyle={color:'#d32f2f',weight:4,opacity:.9,dashArray:'8 7'};
-const plannedStyle={color:'#7b1fa2',weight:4,opacity:.9,dashArray:'10 7'};
-const waterGroup=L.layerGroup([
-  L.polyline(byvannselvaCoords,waterStyle).bindTooltip('Byvannselva'),
-  L.polyline(smavannselvaCoords,waterStyle).bindTooltip('Småvannselva')
-]).addTo(map);
-const affectedGroup=L.layerGroup([
-  L.polyline(byvannselvaCoords,affectedStyle).bindTooltip('Byvannselva – redusert vannføring'),
-  L.polyline(smavannselvaCoords,affectedStyle).bindTooltip('Småvannselva – redusert vannføring')
-]);
-const plannedGroup=L.layerGroup([
-  L.polyline(plannedPipeCoords,plannedStyle).bindTooltip('Omsøkt vannledning – forenklet trasé')
-]);
-function bearing(a,b){
-  const r=Math.PI/180,y=Math.sin((b[1]-a[1])*r)*Math.cos(b[0]*r);
-  const x=Math.cos(a[0]*r)*Math.sin(b[0]*r)-Math.sin(a[0]*r)*Math.cos(b[0]*r)*Math.cos((b[1]-a[1])*r);
-  return (Math.atan2(y,x)/r+360)%360;
-}
-function arrowAt(a,b){
-  const lat=(a[0]+b[0])/2,lng=(a[1]+b[1])/2,rot=bearing(a,b);
-  return L.marker([lat,lng],{interactive:false,icon:L.divIcon({
-    className:'',html:`<div class="water-arrow" style="transform:rotate(${rot}deg)">▲</div>`,
-    iconSize:[20,20],iconAnchor:[10,10]
-  })});
-}
-const arrowGroup=L.layerGroup([
-  arrowAt(byvannselvaCoords[1],byvannselvaCoords[4]),
-  arrowAt(byvannselvaCoords[4],byvannselvaCoords[7]),
-  arrowAt(smavannselvaCoords[0],smavannselvaCoords[3]),
-  arrowAt(smavannselvaCoords[3],smavannselvaCoords[5])
-]).addTo(map);
 
 const airPoints=new Set([1,2,3,11,12,14,20]);
 const groundPoints=new Set([4,5,6,8,13,15,16,17,18]);
@@ -165,25 +84,6 @@ const panel=$('layerPanel'),layerButton=$('layerButton'),range=$('reliefRange'),
 function panelOpen(on){panel.classList.toggle('open',on);layerButton.setAttribute('aria-expanded',String(on))}
 layerButton.addEventListener('click',()=>panelOpen(!panel.classList.contains('open')));$('panelClose').addEventListener('click',()=>panelOpen(false));
 $('stopsToggle').addEventListener('change',e=>e.target.checked?stops.addTo(map):map.removeLayer(stops));
-
-$('waterToggle').addEventListener('change',e=>{
-  if(e.target.checked){waterGroup.addTo(map);arrowGroup.addTo(map)}
-  else{map.removeLayer(waterGroup);map.removeLayer(arrowGroup)}
-});
-$('plannedToggle').addEventListener('change',e=>e.target.checked?plannedGroup.addTo(map):map.removeLayer(plannedGroup));
-$('affectedToggle').addEventListener('change',e=>e.target.checked?affectedGroup.addTo(map):map.removeLayer(affectedGroup));
-function setPhase(mode){
-  const planned=mode==='planned';
-  $('beforeBtn').classList.toggle('active',!planned);
-  $('plannedBtn').classList.toggle('active',planned);
-  $('plannedToggle').checked=planned;
-  $('affectedToggle').checked=planned;
-  if(planned){plannedGroup.addTo(map);affectedGroup.addTo(map)}
-  else{map.removeLayer(plannedGroup);map.removeLayer(affectedGroup)}
-}
-$('beforeBtn').addEventListener('click',()=>setPhase('before'));
-$('plannedBtn').addEventListener('click',()=>setPhase('planned'));
-
 function setRelief(v){v=Math.max(0,Math.min(100,Number(v)||0));range.value=v;reliefValue.textContent=Math.round(v)+' %';relief.setOpacity(reliefToggle.checked?v/100:0)}
 range.addEventListener('input',()=>{stopIntro();setRelief(range.value)});
 reliefToggle.addEventListener('change',()=>setRelief(range.value));
