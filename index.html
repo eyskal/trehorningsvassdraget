@@ -30,10 +30,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
 
 .new-water-legend{font-size:12px;line-height:1.55;margin:5px 0 0 24px}
 .pipe-key{display:flex;align-items:center;gap:7px;margin:3px 0}
-.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #c62828}
+.pipe-swatch{width:28px;height:0;display:inline-block;flex:none;border-top:3px solid #6a3d8f}
 .pipe-tunnel{border-top-style:dashed}
 .pipe-submerged{border-top-style:solid}
-.pipe-trench{border-top:3px dotted #c62828}
+.pipe-trench{border-top:3px dotted #6a3d8f}
 
 </style>
 </head>
@@ -50,12 +50,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-w
   </div>
 
   <div class="section">
-    <label class="row"><input id="newWaterwayToggle" type="checkbox"> Ny vannvei</label>
-    <div class="new-water-legend" aria-label="Seksjoner i ny vannvei">
+    <strong style="font-size:13px">Ombygging av vassdraget</strong>
+    <label class="row"><input id="newWaterwayToggle" type="checkbox"> Vis planlagte tiltak</label>
+    <div class="new-water-legend" aria-label="Planlagte tiltak">
       <div class="pipe-key"><span class="pipe-swatch pipe-tunnel"></span><span>Boret vanntunnel</span></div>
       <div class="pipe-key"><span class="pipe-swatch pipe-submerged"></span><span>Nedsenket rør</span></div>
       <div class="pipe-key"><span class="pipe-swatch pipe-trench"></span><span>Rør i grøft</span></div>
     </div>
+    <div style="font-size:11px;color:#555;font-style:italic;margin:8px 0 0 24px">Basert på konsesjonssøknaden.</div>
   </div>
   <div class="section">
     <label class="row"><input id="reliefToggle" type="checkbox" checked> Terrengrelieff</label>
@@ -81,7 +83,7 @@ const points={"type":"FeatureCollection","features":[
 {"type":"Feature","properties":{"number":1,"chapter":"1/20"},"geometry":{"type":"Point","coordinates":[10.4381774,60.0133233]}},{"type":"Feature","properties":{"number":2,"chapter":"2/20"},"geometry":{"type":"Point","coordinates":[10.4372333,60.0142479]}},{"type":"Feature","properties":{"number":3,"chapter":"3/20"},"geometry":{"type":"Point","coordinates":[10.4344614,60.0173123]}},{"type":"Feature","properties":{"number":4,"chapter":"4/20"},"geometry":{"type":"Point","coordinates":[10.4343084,60.0180639]}},{"type":"Feature","properties":{"number":5,"chapter":"5/20"},"geometry":{"type":"Point","coordinates":[10.4345013,60.017636]}},{"type":"Feature","properties":{"number":6,"chapter":"6/20"},"geometry":{"type":"Point","coordinates":[10.4344023,60.0171108]}},{"type":"Feature","properties":{"number":7,"chapter":"7/20"},"geometry":{"type":"Point","coordinates":[10.4344704,60.0171112]}},{"type":"Feature","properties":{"number":8,"chapter":"8/20"},"geometry":{"type":"Point","coordinates":[10.4346985,60.0160577]}},{"type":"Feature","properties":{"number":9,"chapter":"9/20"},"geometry":{"type":"Point","coordinates":[10.4346127,60.0153928]}},{"type":"Feature","properties":{"number":10,"chapter":"10/20"},"geometry":{"type":"Point","coordinates":[10.4360421,60.0145224]}},{"type":"Feature","properties":{"number":11,"chapter":"11/20"},"geometry":{"type":"Point","coordinates":[10.4450646,60.0120054]}},{"type":"Feature","properties":{"number":12,"chapter":"12/20"},"geometry":{"type":"Point","coordinates":[10.4502894,60.007695]}},{"type":"Feature","properties":{"number":13,"chapter":"13/20"},"geometry":{"type":"Point","coordinates":[10.4501097,60.0079727]}},{"type":"Feature","properties":{"number":14,"chapter":"14/20"},"geometry":{"type":"Point","coordinates":[10.4454994,60.0043004]}},{"type":"Feature","properties":{"number":15,"chapter":"15/20"},"geometry":{"type":"Point","coordinates":[10.4431765,60.0065153]}},{"type":"Feature","properties":{"number":16,"chapter":"16/20"},"geometry":{"type":"Point","coordinates":[10.4442118,60.0057752]}},{"type":"Feature","properties":{"number":17,"chapter":"17/20"},"geometry":{"type":"Point","coordinates":[10.4464354,60.0037412]}},{"type":"Feature","properties":{"number":18,"chapter":"18/20"},"geometry":{"type":"Point","coordinates":[10.4479669,60.0034109]}},{"type":"Feature","properties":{"number":19,"chapter":"19/20"},"geometry":{"type":"Point","coordinates":[10.4465722,60.0037166]}},{"type":"Feature","properties":{"number":20,"chapter":"20/20"},"geometry":{"type":"Point","coordinates":[10.455449,60.002505]}}]};
 
 
-// Ny vannvei – koordinater hentet direkte fra opplastet KMZ.
+// Ombygging av vassdraget – koordinater hentet direkte fra opplastet KMZ.
 const newWaterwaySections=[
   {
     name:'Boret vanntunnel',
@@ -153,9 +155,9 @@ const relief=L.tileLayer.wms('https://wms.geonorge.no/skwms1/wms.hoyde-dtm',{lay
 
 const newWaterway=L.layerGroup();
 const sectionStyles={
-  tunnel:{color:'#c62828',weight:4,opacity:.9,dashArray:'10 7'},
-  submerged:{color:'#c62828',weight:4,opacity:.9},
-  trench:{color:'#c62828',weight:4,opacity:.9,dashArray:'2 7'}
+  tunnel:{color:'#6a3d8f',weight:3,opacity:.9,dashArray:'6 5'},
+  submerged:{color:'#6a3d8f',weight:3,opacity:.9},
+  trench:{color:'#6a3d8f',weight:3,opacity:.9,dashArray:'2 5'}
 };
 newWaterwaySections.forEach(section=>{
   L.polyline(section.coords,sectionStyles[section.type])
